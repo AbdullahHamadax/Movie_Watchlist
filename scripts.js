@@ -34,13 +34,16 @@ async function handleSearch() {
 
   movieCard.innerHTML = movieDetailsArray
     .map((movie) => {
+      const posterSource =
+        movie.Poster === "N/A" ? "placeholder.png" : movie.Poster;
       return `<div
               class="flex gap-5 sm:gap-7 items-start border-b-[0.094rem] border-[#2C2C2C] pb-7 pt-5"
             >
               <img
-                src="${movie.Poster}"
+                src="${posterSource}"
                 alt="${movie.Title}"
                 class="w-24 sm:w-28 rounded-sm shadow-lg shrink-0"
+                onerror="this.src='placeholder.png'" 
               />
               <div class="flex flex-col gap-3">
                 <div class="flex items-center flex-wrap gap-3">
@@ -89,7 +92,6 @@ async function handleSearch() {
 
   hideError();
   hideDefaultState();
-  console.log(data);
 }
 
 function renderError() {
