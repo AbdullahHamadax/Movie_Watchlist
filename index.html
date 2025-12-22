@@ -12,57 +12,141 @@
     />
     <title>Movie Watchlist</title>
   </head>
-  <body class="bg-[#121212] text-white font-[Inter]">
-    <header
-      class="bg-[url('/image.png')] relative h-60 flex flex-col justify-center px-10"
-    >
+  <body class="bg-[#121212] text-white font-[Inter] min-h-screen">
+    <header class="bg-[url('/image.png')] bg-cover bg-center bg-no-repeat h-60">
       <div
-        class="flex flex-col items-center justify-between w-full gap-9 sm:flex-row"
+        class="max-w-3xl mx-auto px-6 sm:px-10 h-full flex flex-col justify-center relative"
       >
-        <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight">
-          Find your film
-        </h1>
-        <a href="watchlist.html" class="font-bold hover:underline text-sm"
-          >My Watchlist</a
+        <div
+          class="flex flex-col items-center justify-between w-full gap-4 sm:flex-row"
         >
-      </div>
-
-      <div class="absolute inset-x-0 -bottom-5 self-center w-full px-10">
-        <div class="flex max-w-2xl mx-auto shadow-2xl">
-          <div class="relative w-full">
-            <div
-              class="absolute inset-y-0 pl-4 flex items-center pointer-events-none"
-            >
-              <svg
-                class="size-5 text-gray-400"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                />
-              </svg>
-            </div>
-            <input
-              type="search"
-              class="w-full bg-[#2E2E2F] border-none text-white py-[0.7rem] pl-12 pr-4 rounded-l-md focus:ring-2 focus:ring-gray-500 outline-none text-sm"
-              placeholder="Dragonball Super"
-            />
-          </div>
-          <button
-            class="bg-[#4B4B4B] hover:bg-[#5a5a5a] transition-colors px-9 rounded-r-md font-medium text-sm"
+          <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight">
+            Find your film
+          </h1>
+          <a href="watchlist.html" class="font-bold hover:underline text-sm"
+            >My Watchlist</a
           >
-            Search
-          </button>
+        </div>
+
+        <div class="absolute inset-x-6 sm:inset-x-10 -bottom-6">
+          <div class="flex shadow-2xl">
+            <div class="relative w-full">
+              <div
+                class="absolute inset-y-0 pl-4 flex items-center pointer-events-none"
+              >
+                <svg
+                  class="size-5 text-gray-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                  />
+                </svg>
+              </div>
+              <input
+                type="search"
+                class="w-full bg-[#2E2E2F] border-none text-white py-3 pl-12 pr-4 rounded-l-md focus:ring-1 focus:ring-gray-500 outline-none text-sm"
+                id="search-input"
+                placeholder="Search for a movie..."
+              />
+            </div>
+            <button
+              class="bg-[#4B4B4B] hover:bg-[#5a5a5a] transition-colors px-8 rounded-r-md font-medium text-sm cursor-pointer"
+              id="search-btn"
+            >
+              Search
+            </button>
+          </div>
         </div>
       </div>
     </header>
 
-    <main class="mt-20 px-10 max-w-4xl mx-auto"></main>
+    <main class="mt-20 max-w-3xl mx-auto px-6 sm:px-10 pb-20">
+      <div
+        class="flex flex-col items-center gap-1 opacity-30"
+        id="default-state"
+      >
+        <svg
+          width="70"
+          height="62"
+          viewBox="0 0 70 62"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          id="main-icon"
+        >
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M8.75 0C3.91751 0 0 3.9175 0 8.75V52.5C0 57.3325 3.91751 61.25 8.75 61.25H61.25C66.0825 61.25 70 57.3325 70 52.5V8.75C70 3.9175 66.0825 0 61.25 0H8.75ZM21.875 8.75H48.125V26.25H21.875V8.75ZM56.875 43.75V52.5H61.25V43.75H56.875ZM48.125 35H21.875V52.5H48.125V35ZM56.875 35H61.25V26.25H56.875V35ZM61.25 17.5V8.75H56.875V17.5H61.25ZM13.125 8.75V17.5H8.75V8.75H13.125ZM13.125 26.25H8.75V35H13.125V26.25ZM8.75 43.75H13.125V52.5H8.75V43.75Z"
+            fill="#a9a9ad"
+          />
+        </svg>
+
+        <p class="text-[#a9a9ad] text-lg font-bold" id="default-state-text">
+          Start exploring
+        </p>
+      </div>
+      <div id="movie-list" class="flex flex-col gap-10">
+        <!-- <div
+          class="flex gap-5 sm:gap-7 items-start border-b-[0.094rem] border-[#2C2C2C] pb-7"
+        >
+          <img
+            src="https://m.media-amazon.com/images/M/MV5BOGMzMjFiMDUtZWQ5Ny00MTUyLWEyYzItMzcwNzJjNzBmMjI4XkEyXkFqcGc@._V1_QL75_UX231_.jpg"
+            alt="Get out"
+            class="w-24 sm:w-28 rounded-sm shadow-lg shrink-0"
+          />
+
+          <div class="flex flex-col gap-3">
+            <div class="flex items-center flex-wrap gap-3">
+              <h2 class="text-lg font-bold">Title</h2>
+              <div class="flex items-center gap-[0.36rem] text-sm">
+                <svg
+                  class="size-4 text-[#FEC84B]"
+                  fill="currentColor"
+                  viewBox="0 0 22 20"
+                >
+                  <path
+                    d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"
+                  />
+                </svg>
+                <span>Rating</span>
+              </div>
+            </div>
+
+            <div class="flex items-center flex-wrap gap-x-5 gap-y-2 text-xs">
+              <span>Length</span>
+              <span>Genres</span>
+              <button
+                class="flex items-center gap-1.5 text-xs hover:text-[#38BDF8] transition-colors cursor-pointer"
+              >
+                <svg
+                  class="size-4"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <circle cx="8" cy="8" r="8" fill="white" />
+                  <path
+                    d="M8 5V11M5 8H11"
+                    stroke="#121212"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                  />
+                </svg>
+                Add to watchlist
+              </button>
+            </div>
+
+            <p class="text-[#A5A5A5] text-sm leading-relaxed">Description</p>
+          </div>
+        </div> -->
+      </div>
+    </main>
 
     <script src="scripts.js"></script>
   </body>
