@@ -1,82 +1,44 @@
-const defaultStateContainer = document.getElementById("default-state");
-const movieCard = document.getElementById("movie-card");
-const defaultStateText = document.getElementById("default-state-text");
-const searchBtn = document.getElementById("search-btn");
-const searchInput = document.getElementById("search-input");
-const filmReelIcon = document.getElementById("main-icon");
+let savedMovies = JSON.parse(localStorage.getItem("movies-added-to-watchlist"));
+const watchListDefaultState = document.getElementById(
+  "watchlist-default-state"
+);
+
+let movieDetailsArray = [];
+
 const APIKEY = "f0c686cd";
-searchBtn.addEventListener("click", handleSearch);
+const movieCard = document.getElementById("movie-card");
 
-async function handleSearch() {
-  if (!searchInput.value) {
-    renderError();
-    return;
-  }
-
-  const response = await fetch(
-    `http://www.omdbapi.com/?apikey=${APIKEY}&s=${searchInput.value}`
-  );
-  const searchData = await response.json();
-
-  if (searchData.Response === "False") {
-    renderError();
-    return;
-  }
-
-  const moviePromises = searchData.Search.map(async (movie) => {
-    const detailRes = await fetch(
-      `http://www.omdbapi.com/?apikey=${APIKEY}&i=${movie.imdbID}`
-    );
-    return await detailRes.json();
-  });
-
-  const movieDetailsArray = await Promise.all(moviePromises);
-
-  movieCard.innerHTML = renderMovieHtml(movieDetailsArray, false);
-
-  hideError();
-  hideDefaultState();
-}
-
-const moviesWatchlist =
-  JSON.parse(localStorage.getItem("movies-added-to-watchlist")) || [];
+init();
 
 document.addEventListener("click", (e) => {
   const addedMovieId = e.target.dataset.movieId;
+  const updatedWatchlist = savedMovies.filter((id) => id !== addedMovieId);
+  movieDetailsArray = movieDetailsArray.filter(
+    (movie) => movie.imdbID !== addedMovieId
+  );
+  localStorage.setItem(
+    "movies-added-to-watchlist",
+    JSON.stringify(updatedWatchlist)
+  );
 
-  if (addedMovieId && !moviesWatchlist.includes(addedMovieId)) {
-    moviesWatchlist.push(addedMovieId);
-    localStorage.setItem(
-      "movies-added-to-watchlist",
-      JSON.stringify(moviesWatchlist)
-    );
+  savedMovies = JSON.parse(localStorage.getItem("movies-added-to-watchlist"));
+  if (!savedMovies.length) {
+    showWatchListDefaultState();
   }
+
+  movieCard.innerHTML = renderMovieHtml(movieDetailsArray, true);
 });
 
-function renderError() {
-  showDefaultState();
-  filmReelIcon.classList.add("hidden");
-  defaultStateText.textContent =
-    "Unable to find what you’re looking for. Please try another search.";
-
-  movieCard.classList.add("hidden");
+function hideWatchListDefaultState() {
+  watchListDefaultState.classList.add("hidden");
 }
-
-function hideError() {
-  defaultStateText.textContent = ``;
-  movieCard.classList.remove("hidden");
-}
-
-function hideDefaultState() {
-  defaultStateContainer.classList.add("hidden");
-}
-
-function showDefaultState() {
-  defaultStateContainer.classList.remove("hidden");
+function showWatchListDefaultState() {
+  watchListDefaultState.classList.remove("hidden");
 }
 
 function renderMovieHtml(movie, isWatchlistPage) {
   return movie
+    .reverse()
     .map((movie) => {
       const posterSource =
         movie.Poster === "N/A" ? "placeholder.png" : movie.Poster;
@@ -159,4 +121,20 @@ function renderMovieHtml(movie, isWatchlistPage) {
             </div>`;
     })
     .join("");
+}
+
+async function init() {
+  if (savedMovies.length !== 0) {
+    hideWatchListDefaultState();
+    const moviePromises = savedMovies.map(async (movieId) => {
+      const detailRes = await fetch(
+        `http://www.omdbapi.com/?apikey=${APIKEY}&i=${movieId}`
+      );
+      return await detailRes.json();
+    });
+
+    movieDetailsArray = await Promise.all(moviePromises);
+
+    movieCard.innerHTML = renderMovieHtml(movieDetailsArray, true);
+  }
 }

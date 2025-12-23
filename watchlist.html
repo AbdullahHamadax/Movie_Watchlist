@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <title>Movie Watchlist</title>
+  </head>
+  <body class="bg-[#121212] text-white font-[Inter] min-h-screen">
+    <header class="bg-[url('/image.png')] bg-cover bg-center bg-no-repeat h-60">
+      <div
+        class="max-w-3xl mx-auto px-6 sm:px-10 h-full flex flex-col justify-center relative"
+      >
+        <div
+          class="flex flex-col items-center justify-between w-full gap-4 sm:flex-row"
+        >
+          <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight">
+            My Watchlist
+          </h1>
+          <a href="index.html" class="font-bold hover:underline text-sm"
+            >Search for movies</a
+          >
+        </div>
+      </div>
+    </header>
+
+    <main class="mt-3 max-w-3xl mx-auto px-6 sm:px-10 pb-20">
+      <div
+        class="flex flex-col items-center gap-3"
+        id="watchlist-default-state"
+      >
+        <p
+          class="text-[#a9a9ad] text-lg font-bold opacity-50"
+          id="watchlist-default-state-text"
+        >
+          Your watchlist is looking a little empty...
+        </p>
+        <button
+          class="flex items-center gap-1.5 text-sm text-white hover:text-[#38BDF8] transition-colors cursor-pointer"
+        >
+          <svg
+            class="size-4 text-white"
+            viewBox="0 0 16 16"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <circle cx="8" cy="8" r="8" fill="white" />
+            <path
+              d="M8 5V11M5 8H11"
+              stroke="#121212"
+              stroke-width="2"
+              stroke-linecap="round"
+            />
+          </svg>
+          <a href="index.html">Let’s add some movies!</a>
+        </button>
+      </div>
+      <div id="movie-watch-list" class="flex flex-col gap-10">
+        <div id="movie-card"></div>
+      </div>
+    </main>
+
+    <script src="watchlist.js"></script>
+  </body>
+</html>
