@@ -16,7 +16,7 @@ async function handleSearch() {
   }
 
   const response = await fetch(
-    `http://www.omdbapi.com/?apikey=${APIKEY}&s=${searchInput.value}`
+    `https://www.omdbapi.com/?apikey=${APIKEY}&s=${searchInput.value}`
   );
   const searchData = await response.json();
 
@@ -27,7 +27,7 @@ async function handleSearch() {
 
   const moviePromises = searchData.Search.map(async (movie) => {
     const detailRes = await fetch(
-      `http://www.omdbapi.com/?apikey=${APIKEY}&i=${movie.imdbID}`
+      `https://www.omdbapi.com/?apikey=${APIKEY}&i=${movie.imdbID}`
     );
     return await detailRes.json();
   });
