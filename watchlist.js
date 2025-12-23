@@ -1,4 +1,9 @@
 import renderMovieHtml from "./renderMovieFunction.js";
+import { showToast, removeToast } from "./renderMovieFunction.js";
+
+const APIKEY = "f0c686cd";
+const movieCard = document.getElementById("movie-card");
+
 let savedMovies = JSON.parse(localStorage.getItem("movies-added-to-watchlist"));
 const watchListDefaultState = document.getElementById(
   "watchlist-default-state"
@@ -6,17 +11,18 @@ const watchListDefaultState = document.getElementById(
 
 let movieDetailsArray = [];
 
-const APIKEY = "f0c686cd";
-const movieCard = document.getElementById("movie-card");
-
 init();
 
 document.addEventListener("click", (e) => {
   const addedMovieId = e.target.dataset.movieId;
   const updatedWatchlist = savedMovies.filter((id) => id !== addedMovieId);
+  const clickedMovie = movieDetailsArray.find(
+    (movie) => movie.imdbID === addedMovieId
+  );
   movieDetailsArray = movieDetailsArray.filter(
     (movie) => movie.imdbID !== addedMovieId
   );
+
   localStorage.setItem(
     "movies-added-to-watchlist",
     JSON.stringify(updatedWatchlist)
@@ -28,6 +34,12 @@ document.addEventListener("click", (e) => {
   }
 
   movieCard.innerHTML = renderMovieHtml(movieDetailsArray, true);
+  showToast(
+    `${clickedMovie.Title} has been sucessfully removed from the watchlist`,
+    "error"
+  );
+
+  setTimeout(() => removeToast(), 2500);
 });
 
 function hideWatchListDefaultState() {

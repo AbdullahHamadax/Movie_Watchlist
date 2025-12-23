@@ -88,3 +88,15 @@ export default function renderMovieHtml(movie, isWatchlistPage) {
     })
     .join("");
 }
+
+const sonner = document.createElement("div");
+
+export function showToast(message, type) {
+  const backgroundColor = type === "error" ? "bg-[#FB7185]" : "bg-[#38BDF8]";
+  sonner.textContent = message;
+  document.body.append(sonner);
+  sonner.className = `fixed bottom-5 right-5 ${backgroundColor} p-4 rounded-md shadow-lg font-bold text-slate-900 transition-all opacity-100 duration-500 translate-y-0`;
+}
+export function removeToast() {
+  sonner.remove();
+}

@@ -1,4 +1,5 @@
 import renderMovieHtml from "./renderMovieFunction.js";
+import { showToast, removeToast } from "./renderMovieFunction.js";
 
 const defaultStateContainer = document.getElementById("default-state");
 const movieCard = document.getElementById("movie-card");
@@ -7,6 +8,9 @@ const searchBtn = document.getElementById("search-btn");
 const searchInput = document.getElementById("search-input");
 const filmReelIcon = document.getElementById("main-icon");
 const APIKEY = "f0c686cd";
+
+let movieDetailsArray = [];
+
 searchBtn.addEventListener("click", handleSearch);
 
 async function handleSearch() {
@@ -32,7 +36,7 @@ async function handleSearch() {
     return await detailRes.json();
   });
 
-  const movieDetailsArray = await Promise.all(moviePromises);
+  movieDetailsArray = await Promise.all(moviePromises);
 
   movieCard.innerHTML = renderMovieHtml(movieDetailsArray, false);
 
@@ -45,13 +49,29 @@ const moviesWatchlist =
 
 document.addEventListener("click", (e) => {
   const addedMovieId = e.target.dataset.movieId;
-
-  if (addedMovieId && !moviesWatchlist.includes(addedMovieId)) {
+  const clickedMovie = movieDetailsArray.find(
+    (movie) => movie.imdbID === addedMovieId
+  );
+  if (addedMovieId && !moviesWatchlist.includes(addedMovieId) && clickedMovie) {
     moviesWatchlist.push(addedMovieId);
+
+    showToast(
+      `${clickedMovie.Title} has been sucessfully added to the watchlist`
+    );
+
+    setTimeout(() => removeToast(), 3300);
+
     localStorage.setItem(
       "movies-added-to-watchlist",
       JSON.stringify(moviesWatchlist)
     );
+  } else if (moviesWatchlist.includes(addedMovieId)) {
+    showToast(
+      `${clickedMovie.Title} is already added to the watchlist`,
+      "error"
+    );
+
+    setTimeout(() => removeToast(), 2500);
   }
 });
 
