@@ -1,5 +1,5 @@
-import renderMovieHtml from "./renderMovieFunction.js";
-import { showToast, removeToast } from "./renderMovieFunction.js";
+import renderMovieHtml from "./utils.js";
+import { showToast } from "./utils.js";
 
 const defaultStateContainer = document.getElementById("default-state");
 const movieCard = document.getElementById("movie-card");
@@ -59,8 +59,6 @@ document.addEventListener("click", (e) => {
       `${clickedMovie.Title} has been sucessfully added to the watchlist`
     );
 
-    setTimeout(() => removeToast(), 3300);
-
     localStorage.setItem(
       "movies-added-to-watchlist",
       JSON.stringify(moviesWatchlist)
@@ -70,8 +68,6 @@ document.addEventListener("click", (e) => {
       `${clickedMovie.Title} is already added to the watchlist`,
       "error"
     );
-
-    setTimeout(() => removeToast(), 2500);
   }
 });
 

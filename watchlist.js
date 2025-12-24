@@ -1,5 +1,5 @@
-import renderMovieHtml from "./renderMovieFunction.js";
-import { showToast, removeToast } from "./renderMovieFunction.js";
+import renderMovieHtml from "./utils.js";
+import { showToast } from "./utils.js";
 
 const APIKEY = "f0c686cd";
 const movieCard = document.getElementById("movie-card");
@@ -38,8 +38,6 @@ document.addEventListener("click", (e) => {
     `${clickedMovie.Title} has been sucessfully removed from the watchlist`,
     "error"
   );
-
-  setTimeout(() => removeToast(), 2500);
 });
 
 function hideWatchListDefaultState() {

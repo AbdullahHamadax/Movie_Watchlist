@@ -88,15 +88,24 @@ export default function renderMovieHtml(movie, isWatchlistPage) {
     })
     .join("");
 }
-
-const sonner = document.createElement("div");
-
+let toastContainer;
 export function showToast(message, type) {
-  const backgroundColor = type === "error" ? "bg-[#FB7185]" : "bg-[#38BDF8]";
-  sonner.textContent = message;
-  document.body.append(sonner);
-  sonner.className = `fixed bottom-5 right-5 ${backgroundColor} p-4 rounded-md shadow-lg font-bold text-slate-900 transition-all opacity-100 duration-500 translate-y-0`;
-}
-export function removeToast() {
-  sonner.remove();
+  if (!toastContainer) {
+    toastContainer = document.createElement("div");
+    toastContainer.className =
+      "fixed bottom-5 right-5 flex flex-col-reverse gap-2 items-end";
+    document.body.append(toastContainer);
+  }
+
+  const toast = document.createElement("div");
+  const bgColor = type === "error" ? "bg-[#FB7185]" : "bg-[#38BDF8]";
+
+  toast.className = `${bgColor} p-4 rounded-md shadow-lg font-bold text-slate-900 transition-all duration-500 transform translate-y-0 opacity-100`;
+  toast.textContent = message;
+
+  toastContainer.append(toast);
+
+  setTimeout(() => {
+    toast.remove();
+  }, 2500);
 }
