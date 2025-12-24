@@ -100,7 +100,7 @@ export function showToast(message, type) {
   const toast = document.createElement("div");
   const bgColor = type === "error" ? "bg-[#FB7185]" : "bg-[#38BDF8]";
 
-  toast.className = `${bgColor} p-4 rounded-md shadow-lg font-bold text-slate-900 transition-all duration-500 transform translate-y-0 opacity-100`;
+  toast.className = `${bgColor} p-4 rounded-md shadow-lg font-bold text-slate-900`;
   toast.textContent = message;
 
   toastContainer.append(toast);
